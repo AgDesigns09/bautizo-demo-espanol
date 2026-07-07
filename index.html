@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Invitación Bautizo - Plantilla Demo</title>
+    <title>Invitación Bautizo Premium - Catálogo</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -55,7 +55,7 @@
         .photo-container img {
             width: 170px; height: 170px;
             border-radius: 50%; object-fit: cover;
-            object-position: center 20%;
+            object-position: center;
             border: 4px solid var(--dorado);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
@@ -81,13 +81,8 @@
         }
 
         .bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 20px;
-            border-width: 8px 8px 0;
-            border-style: solid;
-            border-color: var(--dorado) transparent;
+            content: ''; position: absolute; bottom: -8px; left: 20px;
+            border-width: 8px 8px 0; border-style: solid; border-color: var(--dorado) transparent;
         }
 
         @keyframes pulse {
@@ -126,16 +121,33 @@
             background: linear-gradient(to right, transparent, var(--dorado), transparent);
         }
 
+        /* Cuenta regresiva */
+        .countdown-container {
+            display: flex; justify-content: center; gap: 15px; margin: 20px 0;
+        }
+        .countdown-box {
+            background: rgba(119, 139, 123, 0.1); padding: 10px; border-radius: 10px; min-width: 60px;
+        }
+        .countdown-number {
+            font-size: 1.5rem; font-weight: bold; color: var(--verde-fondo); display: block;
+        }
+        .countdown-label { font-size: 0.7rem; text-transform: uppercase; color: var(--texto-suave); }
+
+        /* Botones */
         .btn {
             display: inline-block; padding: 12px 25px;
             border: 2px solid var(--verde-fondo); color: var(--verde-fondo);
             text-decoration: none; border-radius: 25px;
             margin-top: 10px; font-weight: bold;
             text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
+            transition: all 0.3s ease;
         }
-
+        .btn:hover { background-color: var(--verde-fondo); color: white; }
         .btn-principal { background-color: var(--dorado); border-color: var(--dorado); color: white !important; }
+        .btn-principal:hover { background-color: #bfa065; border-color: #bfa065; }
         
+        .btn-gift { border: 1px solid #ddd; color: #555; background: #fff; padding: 8px 15px; font-size: 0.75rem; margin: 5px; }
+
         .fecha { font-size: 1.5rem; font-weight: 300; margin-bottom: 5px; }
         .direccion { font-size: 0.9rem; line-height: 1.5; color: #666; margin-bottom: 10px; }
 
@@ -160,11 +172,22 @@
                 <span>¡Escucha mi risa aquí!</span> 🔊
             </div>
             <div class="photo-container">
+                <!-- Lee el archivo local que subiste a GitHub -->
                 <img src="foto-bebe.jpg" alt="Mateo Alejandro">
             </div>
         </div>
 
         <h1>El Bautizo de<br>Mateo Alejandro</h1>
+    </div>
+
+    <!-- Cuenta Regresiva Premium -->
+    <div class="seccion" data-aos="fade-up" data-aos-duration="1000">
+        <h4 style="margin: 0; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; color: var(--dorado);">Falta muy poco:</h4>
+        <div class="countdown-container">
+            <div class="countdown-box"><span class="countdown-number" id="days">00</span><span class="countdown-label">Días</span></div>
+            <div class="countdown-box"><span class="countdown-number" id="hours">00</span><span class="countdown-label">Horas</span></div>
+            <div class="countdown-box"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">Min</span></div>
+        </div>
     </div>
 
     <p class="dedication" data-aos="fade-in" data-aos-duration="1200">
@@ -195,6 +218,20 @@
         <a href="https://maps.google.com" class="btn" target="_blank">Cómo Llegar</a>
     </div>
 
+    <!-- Sección Mesa de Regalos Premium -->
+    <div class="seccion" data-aos="fade-up" data-aos-duration="1000">
+        <h3>🎁 Mesa de Regalos</h3>
+        <p class="direccion">El mejor regalo es tu presencia, pero si deseas tener un detalle con Mateo, te dejamos algunas opciones:</p>
+        <div style="margin-top: 15px;">
+            <a href="https://amazon.com" target="_blank" class="btn btn-gift">📦 Amazon Wishlist</a>
+            <a href="https://liverpool.com.mx" target="_blank" class="btn btn-gift">🏪 Tienda Departamental</a>
+            <button onclick="mostrarClabe()" class="btn btn-gift" style="cursor:pointer;">🏦 Transferencia Bancaria</button>
+        </div>
+        <p id="clabe-txt" style="display:none; font-size:0.85rem; background:#eee; padding:8px; border-radius:5px; margin-top:10px; font-family:monospace; color:#333;">
+            Banco: Banamex<br>CLABE: 0021 8000 0000 0000 00
+        </p>
+    </div>
+
     <div class="seccion" data-aos="fade-up" data-aos-duration="1000">
         <h3>✨ Confirmación</h3>
         <p class="direccion" style="margin-bottom: 15px;">Favor de confirmar antes del 30 de Octubre</p>
@@ -217,8 +254,39 @@
     var audio = document.getElementById("risaBebe");
     audio.play();
   }
+
+  function mostrarClabe() {
+    var txt = document.getElementById("clabe-txt");
+    if (txt.style.display === "none") {
+        txt.style.display = "block";
+    } else {
+        txt.style.display = "none";
+    }
+  }
+
+  // Lógica de la Cuenta Regresiva Automática (Ajustada dinámicamente al futuro)
+  const targetDate = new Date();
+  targetDate.setFullYear(targetDate.getFullYear() + 1);
+  targetDate.setMonth(10); // Noviembre
+  targetDate.setDate(14);
+  targetDate.setHours(13, 0, 0, 0);
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const difference = targetDate - now;
+
+    const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+    document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+    document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+  }
+  
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
 </script>
 
 </body>
 </html>
-
