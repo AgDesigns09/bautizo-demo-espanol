@@ -121,17 +121,17 @@
             background: linear-gradient(to right, transparent, var(--dorado), transparent);
         }
 
-        /* Cuenta regresiva */
+        /* Cuenta regresiva mejorada con segundos */
         .countdown-container {
-            display: flex; justify-content: center; gap: 15px; margin: 20px 0;
+            display: flex; justify-content: center; gap: 10px; margin: 20px 0;
         }
         .countdown-box {
-            background: rgba(119, 139, 123, 0.1); padding: 10px; border-radius: 10px; min-width: 60px;
+            background: rgba(119, 139, 123, 0.1); padding: 10px 5px; border-radius: 10px; min-width: 55px;
         }
         .countdown-number {
-            font-size: 1.5rem; font-weight: bold; color: var(--verde-fondo); display: block;
+            font-size: 1.4rem; font-weight: bold; color: var(--verde-fondo); display: block;
         }
-        .countdown-label { font-size: 0.7rem; text-transform: uppercase; color: var(--texto-suave); }
+        .countdown-label { font-size: 0.65rem; text-transform: uppercase; color: var(--texto-suave); }
 
         /* Botones */
         .btn {
@@ -172,7 +172,6 @@
                 <span>¡Escucha mi risa aquí!</span> 🔊
             </div>
             <div class="photo-container">
-                <!-- Lee el archivo local que subiste a GitHub -->
                 <img src="foto-bebe.jpg" alt="Mateo Alejandro">
             </div>
         </div>
@@ -180,13 +179,14 @@
         <h1>El Bautizo de<br>Mateo Alejandro</h1>
     </div>
 
-    <!-- Cuenta Regresiva Premium -->
+    <!-- Cuenta Regresiva Premium Dinámica -->
     <div class="seccion" data-aos="fade-up" data-aos-duration="1000">
         <h4 style="margin: 0; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; color: var(--dorado);">Falta muy poco:</h4>
         <div class="countdown-container">
             <div class="countdown-box"><span class="countdown-number" id="days">00</span><span class="countdown-label">Días</span></div>
             <div class="countdown-box"><span class="countdown-number" id="hours">00</span><span class="countdown-label">Horas</span></div>
             <div class="countdown-box"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">Min</span></div>
+            <div class="countdown-box" style="border: 1px dashed var(--dorado);"><span class="countdown-number" id="seconds">00</span><span class="countdown-label" style="color: var(--dorado);">Seg</span></div>
         </div>
     </div>
 
@@ -264,12 +264,16 @@
     }
   }
 
-  // Lógica de la Cuenta Regresiva Automática (Ajustada dinámicamente al futuro)
+  // Lógica exacta calculando desde hoy hasta el próximo 14 de noviembre
   const targetDate = new Date();
-  targetDate.setFullYear(targetDate.getFullYear() + 1);
-  targetDate.setMonth(10); // Noviembre
+  targetDate.setMonth(10); // Noviembre (Mes 10 en JavaScript)
   targetDate.setDate(14);
-  targetDate.setHours(13, 0, 0, 0);
+  targetDate.setHours(13, 0, 0, 0); // Fijado a la hora de la ceremonia
+
+  // Si la fecha de este año ya pasó, calcula para el 14 de noviembre del próximo año
+  if (new Date() > targetDate) {
+      targetDate.setFullYear(targetDate.getFullYear() + 1);
+  }
 
   function updateCountdown() {
     const now = new Date().getTime();
@@ -278,10 +282,12 @@
     const d = Math.floor(difference / (1000 * 60 * 60 * 24));
     const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((difference % (1000 * 60)) / 1000);
 
     document.getElementById("days").innerText = d < 10 ? "0" + d : d;
     document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
     document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+    document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
   }
   
   setInterval(updateCountdown, 1000);
